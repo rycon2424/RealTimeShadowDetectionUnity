@@ -14,13 +14,14 @@ public class Locomotion : State
     {
         pb.anim.ResetTrigger("Jump");
         pb.anim.applyRootMotion = true;
-        pb.cc.enabled = true;
+        pb.characterController.enabled = true;
         pb.airtime = 0;
+        pb.playerControls.BindInputToCommand(KeyCode.F, new LockOnTargetCommand(), KeyCommand.KeyType.OnKeyDown);
     }
 
     public override void OnStateExit(PlayerBehaviour pb)
     {
-
+        pb.playerControls.UnBindInput(KeyCode.F);
     }
     
     public override void StateUpdate(PlayerBehaviour pb)
@@ -30,14 +31,8 @@ public class Locomotion : State
         {
             pb.RotateToCam();
         }
-        if (Input.GetKeyDown(pb.pc.crouch))
-        {
-            pb.stateMachine.GoToState(pb, "Crouch");
-        }
-        GrabLedge(pb);
         Movement(pb);
         pb.ShadowDash();
-        pb.CanTarget();
         if (pb.airtime > 0.75f)
         {
             pb.anim.SetTrigger("fall");
@@ -45,17 +40,6 @@ public class Locomotion : State
         }
     }
     
-    void GrabLedge(PlayerBehaviour pb)
-    {
-        if (pb.grounded == false)
-        {
-            if (Input.GetKey(pb.pc.grab))
-            {
-                pb.LedgeInfo();
-            }
-        }
-    }
-
     void Movement(PlayerBehaviour pb)
     {
         float x = Input.GetAxis("Horizontal");
@@ -73,21 +57,6 @@ public class Locomotion : State
         else
         {
             pb.anim.SetBool("Walking", false);
-        }
-        //Sprinting
-        if (Input.GetKey(pb.pc.sprint))
-        {
-            pb.anim.SetBool("Sprinting", true);
-        }
-        else
-        {
-            pb.anim.SetBool("Sprinting", false);
-        }
-        //Jump
-        if (Input.GetKeyDown(pb.pc.jump))
-        {
-            pb.anim.SetTrigger("Jump");
-            pb.stateMachine.GoToState(pb, "InAir");
         }
     }
 }

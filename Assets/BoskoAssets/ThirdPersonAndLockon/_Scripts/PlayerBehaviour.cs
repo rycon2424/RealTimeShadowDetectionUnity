@@ -15,7 +15,7 @@ public class PlayerBehaviour : MonoBehaviour
     [Space]
     public GameObject teleportParticles;
     public GameObject indicator;
-    public PostProcessProfile pp;
+    public PostProcessProfile postProcProfile;
     public Color outShadowM;
     public Color inShadowM;
     public Material defaultMaterial;
@@ -30,6 +30,8 @@ public class PlayerBehaviour : MonoBehaviour
     [Header("GroundedInfo")]
     public bool grounded;
     public bool ccGrounded;
+    [Space]
+    public bool mountingWall;
 
     [Header("IK")]
     public bool useIK;
@@ -37,13 +39,13 @@ public class PlayerBehaviour : MonoBehaviour
     public Vector3 rightHandPos;
 
     #region public hidden
-    [HideInInspector] public CharacterController cc;
-    [HideInInspector] public OrbitCamera oc;
-    [HideInInspector] public LockOnLookat lol;
-    [HideInInspector] public TargetingSystem ts;
+    [HideInInspector] public CharacterController characterController;
+    [HideInInspector] public OrbitCamera orbitCam;
+    [HideInInspector] public LockOnLookat lockOnFocus;
+    [HideInInspector] public TargetingSystem targetingSystem;
     [HideInInspector] public Animator anim;
     [HideInInspector] public bool lockedOn;
-    [HideInInspector] public PlayerControls pc;
+    [HideInInspector] public PlayerInputHandler playerControls;
     [HideInInspector] public StateMachine stateMachine;
 
     [HideInInspector] public MonoBehaviour mono;
@@ -52,20 +54,29 @@ public class PlayerBehaviour : MonoBehaviour
     void Start()
     {
         stateMachine = new StateMachine();
+        playerControls = new PlayerInputHandler();
 
         mono = this;
 
-        cc = GetComponent<CharacterController>();
-        ts = GetComponent<TargetingSystem>();
+        characterController = GetComponent<CharacterController>();
+        targetingSystem = GetComponent<TargetingSystem>();
         anim = GetComponent<Animator>();
-        pc = GetComponent<PlayerControls>();
 
-        oc = GetComponentInChildren<OrbitCamera>();
-        lol = GetComponentInChildren<LockOnLookat>();
+        orbitCam = GetComponentInChildren<OrbitCamera>();
+        lockOnFocus = GetComponentInChildren<LockOnLookat>();
 
-        lol.gameObject.SetActive(false);
+        lockOnFocus.gameObject.SetActive(false);
 
+        SetupCommands();
         SetupStateMachine();
+    }
+
+    void SetupCommands()
+    {
+        playerControls.BindInputToCommand(KeyCode.E, new GrabLedgeCommand(), KeyCommand.KeyType.OnKey);
+        playerControls.BindInputToCommand(KeyCode.Space, new JumpCommand(), KeyCommand.KeyType.OnKeyDown);
+        playerControls.BindInputToCommand(KeyCode.C, new CrouchCommand(), KeyCommand.KeyType.OnKeyDown);
+        playerControls.BindInputToCommand(KeyCode.LeftShift, new SprintCommand(), KeyCommand.KeyType.OnKeyDown);
     }
 
     void SetupStateMachine()
@@ -86,7 +97,8 @@ public class PlayerBehaviour : MonoBehaviour
     void Update()
     {
         ShadowSystem();
-        ccGrounded = cc.isGrounded;
+        playerControls.HandleInput(this);
+        ccGrounded = characterController.isGrounded;
         currentStateDebug = currentState.GetType().ToString();
         currentState.StateUpdate(this);
         Targeting();
@@ -100,47 +112,23 @@ public class PlayerBehaviour : MonoBehaviour
             RotateTowardsCamera();
             if (Input.mouseScrollDelta.y != 0)
             {
-                ts.SwitchTarget(oc);
-                lol.target = ts.currentTarget;
+                targetingSystem.SwitchTarget(orbitCam);
+                lockOnFocus.target = targetingSystem.currentTarget;
             }
-            if (Vector3.Distance(transform.position, ts.currentTarget.transform.position) > ts.loseTargetRange)
+            if (Vector3.Distance(transform.position, targetingSystem.currentTarget.transform.position) > targetingSystem.loseTargetRange)
             {
                 LoseTarget();
             }
         }
     }
-
-    public void CanTarget()
-    {
-        if (Input.GetKeyDown(pc.target))
-        {
-            switch (oc.currentState)
-            {
-                case OrbitCamera.CamState.onPlayer:
-                    if (ts.SelectTarget(oc))
-                    {
-                        anim.SetBool("Target", true);
-                        lockedOn = true;
-                        lol.gameObject.SetActive(true);
-                        lol.target = ts.currentTarget;
-                    }
-                    break;
-                case OrbitCamera.CamState.onTarget:
-                    LoseTarget();
-                    break;
-                default:
-                    break;
-            }
-        }
-    }
-
-    void LoseTarget()
+    
+    public void LoseTarget()
     {
         lockedOn = false;
         anim.SetBool("Target", false);
-        oc.ChangeCamState(OrbitCamera.CamState.onPlayer);
-        ts.currentTarget = null;
-        lol.gameObject.SetActive(false);
+        orbitCam.ChangeCamState(OrbitCamera.CamState.onPlayer);
+        targetingSystem.currentTarget = null;
+        lockOnFocus.gameObject.SetActive(false);
     }
 
     public void ChangeState(State newState)
@@ -150,7 +138,7 @@ public class PlayerBehaviour : MonoBehaviour
 
     public void RotateTowardsCamera()
     {
-        Quaternion newLookAt = Quaternion.LookRotation(ts.currentTarget.transform.position - transform.position);
+        Quaternion newLookAt = Quaternion.LookRotation(targetingSystem.currentTarget.transform.position - transform.position);
         newLookAt.x = 0;
         newLookAt.z = 0;
         transform.rotation = Quaternion.Slerp(transform.rotation, newLookAt, Time.deltaTime * 5);
@@ -297,17 +285,17 @@ public class PlayerBehaviour : MonoBehaviour
     IEnumerator LerpCharacterControllerCenter(float to, float lerpTime)
     {
         float timeElapsed = 0;
-        float beginFloat = cc.center.y;
+        float beginFloat = characterController.center.y;
         while (timeElapsed < lerpTime)
         {
             beginFloat = Mathf.Lerp(beginFloat, to, timeElapsed / 0.25f);
             Vector3 temp = new Vector3(0, beginFloat, 0);
-            cc.center = temp;
+            characterController.center = temp;
             timeElapsed += Time.deltaTime;
             yield return new WaitForEndOfFrame();
         }
         Vector3 finalY = new Vector3(0, to, 0);
-        cc.center = finalY;
+        characterController.center = finalY;
     }
 
     public void DelayFunction(string functionName, float delay)
@@ -356,7 +344,7 @@ public class PlayerBehaviour : MonoBehaviour
 
         if (dir.magnitude >= 0.1f)
         {
-            float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + oc.transform.eulerAngles.y;
+            float targetAngle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg + orbitCam.transform.eulerAngles.y;
             float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, targetAngle, ref turnSmoothVelocity, 0.1f);
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
         }
@@ -388,7 +376,7 @@ public class PlayerBehaviour : MonoBehaviour
         {
             if (Input.GetMouseButton(1))
             {
-                RayInfo hitFromCamera = oc.ShootRayFromCam(this);
+                RayInfo hitFromCamera = orbitCam.ShootRayFromCam(this);
                 if (hitFromCamera.hit)
                 {
                     RayInfo hitFromSun = ShadowDetector.instance.GetRayInfo(hitFromCamera.rayHitPoint, Vector3.zero);
@@ -401,7 +389,7 @@ public class PlayerBehaviour : MonoBehaviour
                             indicator.transform.rotation = Quaternion.LookRotation(-hitFromCamera.hitNormal, Vector3.up);
                             indicator.transform.Rotate(-90, 0, 0);
 
-                            Debug.DrawLine(oc.transform.position, hitFromCamera.rayHitPoint, Color.green);
+                            Debug.DrawLine(orbitCam.transform.position, hitFromCamera.rayHitPoint, Color.green);
 
                             PotentialTeleport.hit = true;
                             PotentialTeleport.rayHitPoint = hitFromCamera.rayHitPoint;
@@ -448,7 +436,7 @@ public class PlayerBehaviour : MonoBehaviour
             currentTime += Time.deltaTime;
             float t = currentTime / cycleTime;
             float currentFloat = Mathf.Lerp(start, end, t);
-            pp.GetSetting<Vignette>().intensity.value = currentFloat;
+            postProcProfile.GetSetting<Vignette>().intensity.value = currentFloat;
             yield return null;
         }
     }

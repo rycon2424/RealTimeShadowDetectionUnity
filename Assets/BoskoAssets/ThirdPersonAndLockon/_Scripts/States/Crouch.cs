@@ -20,10 +20,6 @@ public class Crouch : State
         pb.RotateToCam();
         Movement(pb);
         pb.ShadowDash();
-        if (Input.GetKeyDown(pb.pc.crouch))
-        {
-            pb.stateMachine.GoToState(pb, "Locomotion");
-        }
         if (pb.airtime > 0.75f)
         {
             pb.anim.SetTrigger("fall");

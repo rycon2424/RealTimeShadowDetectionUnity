@@ -9,12 +9,15 @@ public class Climbing : State
 
     public override void OnStateEnter(PlayerBehaviour pb)
     {
-        mountingWall = false;
+        pb.playerControls.UnBindInput(KeyCode.Space);
+        pb.playerControls.BindInputToCommand(KeyCode.Space, new WallJumpCommand(), KeyCommand.KeyType.OnKeyDown);
+
+        pb.mountingWall = false;
         climbCooldown = true;
         pb.mono.StartCoroutine(ClimbCooldown(pb.anim, 0.3f, null));
 
         pb.anim.applyRootMotion = false;
-        pb.cc.enabled = false;
+        pb.characterController.enabled = false;
 
         pb.RayHit(pb.transform.position + (pb.transform.forward * 0.6f) + (pb.transform.up * 1.7f), Vector3.down, 0.35f, pb.everything);
 
@@ -35,8 +38,8 @@ public class Climbing : State
         }
 
         Vector3 ccCenter= new Vector3(0, 0.6f, 0);
-        pb.cc.center = ccCenter;
-        pb.cc.height = 1.2f;
+        pb.characterController.center = ccCenter;
+        pb.characterController.height = 1.2f;
 
         pb.anim.SetTrigger("Climb");
         pb.DelayFunction("DelayedRoot", 0.25f);
@@ -45,19 +48,21 @@ public class Climbing : State
 
     public override void OnStateExit(PlayerBehaviour pb)
     {
-        pb.cc.center = defaultCenter;
-        pb.cc.height = defaultHeight;
-        pb.cc.enabled = true;
+        pb.playerControls.UnBindInput(KeyCode.Space);
+        pb.playerControls.BindInputToCommand(KeyCode.Space, new JumpCommand(), KeyCommand.KeyType.OnKeyDown);
+
+        pb.characterController.center = defaultCenter;
+        pb.characterController.height = defaultHeight;
+        pb.characterController.enabled = true;
         pb.airtime = 0;
     }
-
-    private bool mountingWall;
+    
     private bool climbCooldown;
     public override void StateUpdate(PlayerBehaviour pb)
     {
-        pb.anim.SetFloat("LookDirection", pb.oc.transform.localEulerAngles.y);
+        pb.anim.SetFloat("LookDirection", pb.orbitCam.transform.localEulerAngles.y);
         
-        if (mountingWall == true || climbCooldown == true)
+        if (pb.mountingWall == true || climbCooldown == true)
         {
             return;
         }
@@ -65,26 +70,6 @@ public class Climbing : State
         ShimmyClimbing(pb);
 
         ClimbingUpDown(pb);
-
-        if (Input.GetKeyDown(pb.pc.jump))
-        {
-            if (pb.oc.transform.localEulerAngles.y > 70 && pb.oc.transform.localEulerAngles.y < 290)
-            {
-                pb.stateMachine.GoToState(pb, "InAir");
-                pb.anim.SetTrigger("Jump");
-                pb.AddRotation(new Vector3(0, pb.oc.transform.localEulerAngles.y, 0));
-            }
-            else if (!pb.RayHit(pb.transform.position + pb.transform.forward * 0.75f + pb.transform.up * 1.25f, pb.transform.up, 1.75f, pb.everything) && !pb.RayHit(pb.transform.position + pb.transform.up * 1.5f, pb.transform.forward, 1f, pb.everything))
-            {
-                mountingWall = true;
-                pb.anim.SetTrigger("Jump");
-            }
-        }
-        if (Input.GetKeyDown(pb.pc.crouch))
-        {
-            pb.anim.SetTrigger("LetGo");
-            pb.stateMachine.GoToState(pb, "InAir");
-        }
     }
 
     IEnumerator ClimbCooldown(Animator anim, float cld, PlayerBehaviour pb)
@@ -99,7 +84,7 @@ public class Climbing : State
 
     void ClimbingUpDown(PlayerBehaviour pb)
     {
-        int climbDirection = (int)Input.GetAxisRaw(pb.pc.inputVertical);
+        int climbDirection = (int)Input.GetAxisRaw(pb.playerControls.inputVertical);
         if (climbDirection != 0)
         {
             if (climbDirection == -1)
@@ -146,7 +131,7 @@ public class Climbing : State
 
     void ShimmyClimbing(PlayerBehaviour pb)
     {
-        int shimmyDirection = (int)Input.GetAxisRaw(pb.pc.inputHorizontal);
+        int shimmyDirection = (int)Input.GetAxisRaw(pb.playerControls.inputHorizontal);
         if (shimmyDirection != 0)
         {
             pb.PlayerToWall(pb, pb.transform.forward, false, 1.2f);
