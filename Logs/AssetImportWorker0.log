@@ -1,0 +1,209 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.4f1 (0abb6314276a) revision 703331'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Home; OS build 19043.1237; Version 2009; 64bit' Language: 'en' Physical Memory: 16245 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.4f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+Z:/_GithubProjects/ShadowDetection
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+52635
+Successfully changed project path to: Z:/_GithubProjects/ShadowDetection
+Z:/_GithubProjects/ShadowDetection
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 34.10 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.4f1 (0abb6314276a)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path Z:/_GithubProjects/ShadowDetection/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: NVIDIA GeForce RTX 2070 (ID=0x1f02)
+    Vendor:   
+    VRAM:     8031 MB
+    Driver:   30.0.14.7168
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56800
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.4f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001742 seconds.
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 31.35 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.904 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.000505 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.28 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.715 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.31 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1302 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 73.3 MB.
+System memory in use after: 72.8 MB.
+
+Unloading 21 unused Assets to reduce memory usage. Loaded Objects now: 1737.
+Total: 1.608000 ms (FindLiveObjects: 0.099800 ms CreateObjectMapping: 0.032000 ms MarkObjects: 1.132500 ms  DeleteObjects: 0.342900 ms)
+
+========================================================================
+Received Import Request.
+  path: Assets/PolygonSamurai/Materials/NinjaNormal.mat
+  artifactKey: Guid(14af571c302228741977a358d6702a7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/PolygonSamurai/Materials/NinjaNormal.mat using Guid(14af571c302228741977a358d6702a7a) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd8e493a1575f9e80eda4945af01c60a3') in 0.103015 seconds
+  Import took 0.105280 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 9.184867 seconds.
+  path: Assets/_Scripts/RayInfo.cs
+  artifactKey: Guid(3f3c4668dec5f8a4ab4a2183dbfe3324) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/_Scripts/RayInfo.cs using Guid(3f3c4668dec5f8a4ab4a2183dbfe3324) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'd935c450a5928fc466bb5c5f80c79e60') in 0.013884 seconds
+  Import took 0.015836 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000481 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.28 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.636 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.28 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1254 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 72.3 MB.
+System memory in use after: 71.8 MB.
+
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 1780.
+Total: 1.703900 ms (FindLiveObjects: 0.107200 ms CreateObjectMapping: 0.031700 ms MarkObjects: 1.241500 ms  DeleteObjects: 0.322800 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 19.993187 seconds.
+  path: Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/OrbitCamera.cs
+  artifactKey: Guid(132a5da3dc631eb4d8141e74fbd7b7da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/OrbitCamera.cs using Guid(132a5da3dc631eb4d8141e74fbd7b7da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2e1930e77bbf869245d8fca67bbf4a0') in 0.006479 seconds
+  Import took 0.008318 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.018882 seconds.
+  path: Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/OrbitCamera.cs
+  artifactKey: Guid(132a5da3dc631eb4d8141e74fbd7b7da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/OrbitCamera.cs using Guid(132a5da3dc631eb4d8141e74fbd7b7da) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b2e1930e77bbf869245d8fca67bbf4a0') in 0.001943 seconds
+  Import took 0.003922 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 10.168751 seconds.
+  path: Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/PlayerBehaviour.cs
+  artifactKey: Guid(a9bbeb970eaaf284dbc96524a1ee2448) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/PlayerBehaviour.cs using Guid(a9bbeb970eaaf284dbc96524a1ee2448) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '85453dba8b5fd6db5bb8131c6ab5b56c') in 0.005110 seconds
+  Import took 0.007008 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.001066 seconds.
+  path: Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/PlayerBehaviour.cs
+  artifactKey: Guid(a9bbeb970eaaf284dbc96524a1ee2448) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/PlayerBehaviour.cs using Guid(a9bbeb970eaaf284dbc96524a1ee2448) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '85453dba8b5fd6db5bb8131c6ab5b56c') in 0.002141 seconds
+  Import took 0.003848 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000531 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.28 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.635 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.30 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1254 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 72.3 MB.
+System memory in use after: 71.8 MB.
+
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 1783.
+Total: 2.428800 ms (FindLiveObjects: 0.114700 ms CreateObjectMapping: 0.035000 ms MarkObjects: 1.904700 ms  DeleteObjects: 0.373500 ms)
+
+========================================================================
+Received Import Request.
+  Time since last request: 89.713346 seconds.
+  path: Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/PlayerControls.cs
+  artifactKey: Guid(7eb6e29a63fbfc349a0de6392ded1379) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/PlayerControls.cs using Guid(7eb6e29a63fbfc349a0de6392ded1379) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c82cde5689b2107712057d0af83c95de') in 0.005823 seconds
+  Import took 0.007542 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 43.635937 seconds.
+  path: Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/StateMachine.cs
+  artifactKey: Guid(58c8b83f706b3524b87b4a3dd72d0e65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/StateMachine.cs using Guid(58c8b83f706b3524b87b4a3dd72d0e65) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a837b38cf0045c954b0e4ef48b2ac2e2') in 0.005487 seconds
+  Import took 0.007275 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 1.881866 seconds.
+  path: Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/States/Locomotion.cs
+  artifactKey: Guid(db3120acd4805cd4298bdaec49b7b601) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/States/Locomotion.cs using Guid(db3120acd4805cd4298bdaec49b7b601) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '007555418bf8d50c1a2412a6c41eaa07') in 0.005215 seconds
+  Import took 0.007454 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.453566 seconds.
+  path: Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/States/Crouch.cs
+  artifactKey: Guid(2920511be8842e14ea6721e07b537fdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/BoskoAssets/ThirdPersonAndLockon/_Scripts/States/Crouch.cs using Guid(2920511be8842e14ea6721e07b537fdd) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'a3fb5225bbac58ebf26ae443c57b7b9d') in 0.005760 seconds
+  Import took 0.007775 seconds .
+
+========================================================================
+Received Prepare
+Registering precompiled user dll's ...
+Registered in 0.000508 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Refreshing native plugins compatible for Editor in 0.30 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.648 seconds
+Platform modules already initialized, skipping
+Refreshing native plugins compatible for Editor in 0.28 ms, found 0 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1254 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 72.3 MB.
+System memory in use after: 71.8 MB.
+
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 1786.
+Total: 1.908100 ms (FindLiveObjects: 0.137100 ms CreateObjectMapping: 0.038700 ms MarkObjects: 1.341000 ms  DeleteObjects: 0.389100 ms)
+
+AssetImportWorkerClient::OnTransportError - code=2 error=End of file
