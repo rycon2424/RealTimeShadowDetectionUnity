@@ -97,10 +97,10 @@ public class PlayerBehaviour : MonoBehaviour
     void Update()
     {
         ShadowSystem();
-        playerControls.HandleInput(this);
         ccGrounded = characterController.isGrounded;
         currentStateDebug = currentState.GetType().ToString();
         currentState.StateUpdate(this);
+        playerControls.HandleInput(this);
         Targeting();
         anim.SetBool("Land", grounded);
     }

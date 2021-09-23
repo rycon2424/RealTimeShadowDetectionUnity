@@ -10,9 +10,12 @@ public class PlayerInputHandler
 
     private List<KeyCommand> keyCommands = new List<KeyCommand>();
 
+    public List<KeyCode> commandsToRemove = new List<KeyCode>();
+    public List<KeyCommand> commandsToStore = new List<KeyCommand>();
+
     public void BindInputToCommand(KeyCode _keyCode, ICommand _command, KeyCommand.KeyType _keyType)
     {
-        keyCommands.Add(new KeyCommand()
+        commandsToStore.Add(new KeyCommand()
         {
             key = _keyCode,
             command = _command,
@@ -22,10 +25,9 @@ public class PlayerInputHandler
 
     public void UnBindInput(KeyCode keyCode)
     {
-        var keycodes = keyCommands.FindAll(x => x.key == keyCode);
-        keycodes.ForEach(x => keyCommands.Remove(x));
+        commandsToRemove.Add(keyCode);;
     }
-
+    
     public void UnBindAll()
     {
         keyCommands = new List<KeyCommand>();
@@ -33,10 +35,8 @@ public class PlayerInputHandler
 
     public void HandleInput(PlayerBehaviour pb)
     {
-        List<KeyCommand> allCurrentCommands = keyCommands;
-        foreach (var keyCommand in allCurrentCommands)
+        foreach (var keyCommand in keyCommands)
         {
-            Debug.Log(keyCommand.command.ToString());
             switch (keyCommand.keyType)
             {
                 case KeyCommand.KeyType.OnKeyDown:
@@ -61,7 +61,28 @@ public class PlayerInputHandler
                     break;
             }
         }
+        RemoveMarkedCommands(); // Remove commands that were removed during the loop
+        StoreNewCommands(); // Store commands that were stored during the loop
+    }
 
+    void RemoveMarkedCommands()
+    {
+        foreach (var key in commandsToRemove)
+        {
+            Debug.Log(key.ToString());
+            var keycodes = keyCommands.FindAll(x => x.key == key);
+            keycodes.ForEach(x => keyCommands.Remove(x));
+        }
+        commandsToRemove = new List<KeyCode>();
+    }
+
+    void StoreNewCommands()
+    {
+        foreach (var key in commandsToStore)
+        {
+            keyCommands.Add(key);
+        }
+        commandsToStore = new List<KeyCommand>();
     }
 }
 
